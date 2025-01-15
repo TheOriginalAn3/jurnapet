@@ -41,7 +41,7 @@ We welcome contributions! Here's how you can get involved:
 ~~Submit a feature request~~
 
 ## License
-This project is licensed under the GNU General Public License. For more info see LICENSE
+This project is licensed under the  Apache License Version 2.0, January 2004. For more info see LICENSE
 
 ## Stay Updated
 Follow our journey and contribute to making JournaPet a reality. Let’s build a healthier and more joyful way to journal!
