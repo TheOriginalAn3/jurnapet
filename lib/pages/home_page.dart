@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:jurnapet/pages/journalTextInput_page.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({super.key});
@@ -12,10 +13,8 @@ class _HomePageState extends State<HomePage> {
   // Constants
   final double paddingAmmount = 30.0;
 
-  // Text editing controller
+  // Variables
   TextEditingController myController = TextEditingController();
-
-  // Display Date
   DateTime currentDate = DateTime.now();
 
   @override
@@ -55,7 +54,8 @@ class _HomePageState extends State<HomePage> {
             ),
             // Text Input
             Padding(
-              padding: EdgeInsets.only(left: (paddingAmmount / 2)),
+              padding: EdgeInsets.only(
+                  left: (paddingAmmount / 2), right: (paddingAmmount / 2)),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -64,22 +64,49 @@ class _HomePageState extends State<HomePage> {
                     size: 10,
                     color: Colors.black38,
                   ),
-                  SizedBox(
-                    width: 10,
-                  ),
+                  const SizedBox(width: 10),
                   Expanded(
-                    child: TextField(
-                      controller: myController,
-                      decoration: InputDecoration(
-                        hintText: 'Start typing...',
-                        hintStyle: TextStyle(
-                          fontSize: 14,
-                          fontStyle: FontStyle.italic,
-                          fontFamily: "Times New Roman",
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => JournalTextInputPage(),
+                          ),
+                        );
+                      },
+                      child: Container(
+                        padding:
+                            EdgeInsets.symmetric(vertical: paddingAmmount / 2),
+                        decoration: BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(color: Colors.grey.shade400),
+                          ),
                         ),
-                        border: InputBorder.none,
+                        child: Text(
+                          'Start typing...',
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontStyle: FontStyle.italic,
+                            fontFamily: "Times New Roman",
+                            color: Colors.grey.shade600,
+                          ),
+                        ),
                       ),
                     ),
+
+                    // child: TextField(
+                    //   controller: myController,
+                    //   decoration: InputDecoration(
+                    //     hintText: 'Start typing...',
+                    //     hintStyle: TextStyle(
+                    //       fontSize: 14,
+                    //       fontStyle: FontStyle.italic,
+                    //       fontFamily: "Times New Roman",
+                    //     ),
+                    //     border: InputBorder.none,
+                    //   ),
+                    // ),
                   ),
                 ],
               ),
