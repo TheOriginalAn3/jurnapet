@@ -15,10 +15,7 @@ class _MainPageState extends State<MainPage> {
   // Pages
   int _currentPageIndex = 0;
 
-  final List _pages = [
-    HomePage(),
-    SettingsPage(),
-  ];
+  final List _pages = [HomePage(), SettingsPage()];
 
   void _onNavBarItemTapped(int index) {
     if (index > _pages.length || index < 0) {
@@ -34,20 +31,18 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.cyan[100],
-        centerTitle: true,
-        title: Text('JournaPet'),
-        titleTextStyle: TextStyle(
-          color: Colors.black,
-          fontSize: 20,
-          fontWeight: FontWeight.bold,
-        ),
+        forceMaterialTransparency: true,
         actions: [
           IconButton(
-            icon: CircleAvatar(
-              backgroundColor: Colors.deepPurple[400],
-            ),
-            onPressed: () {},
+            icon: Icon(Icons.add),
+            iconSize: 32,
+            // On Pressed, open the Profile Page
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ProfilePage()),
+              );
+            },
           ),
         ],
       ),
