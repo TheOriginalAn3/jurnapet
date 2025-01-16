@@ -11,6 +11,13 @@ class _JournalTextInputPageState extends State<JournalTextInputPage> {
   // Constants and Variables
   final TextEditingController textController = TextEditingController();
 
+  void saveText() {
+    final text = textController.text.trim();
+    if (text.isNotEmpty) {
+      Navigator.pop(context, text);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,6 +47,9 @@ class _JournalTextInputPageState extends State<JournalTextInputPage> {
                       controller: textController,
                       maxLines: 1,
                       autofocus: true,
+                      onSubmitted: (value) {
+                        saveText();
+                      },
                       decoration: const InputDecoration(
                         hintText: 'Start typing...',
                         hintStyle: TextStyle(
@@ -62,9 +72,7 @@ class _JournalTextInputPageState extends State<JournalTextInputPage> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 ElevatedButton(
-                  onPressed: () {
-                    Navigator.pop(context, textController.text);
-                  },
+                  onPressed: saveText,
                   child: const Text.rich(
                     TextSpan(
                       text: 'Save',

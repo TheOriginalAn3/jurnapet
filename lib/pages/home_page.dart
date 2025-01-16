@@ -16,6 +16,16 @@ class _HomePageState extends State<HomePage> {
   // Variables
   TextEditingController myController = TextEditingController();
   DateTime currentDate = DateTime.now();
+  //TODO: Implement a way to store journal entries
+  List<String> journalEntries = [];
+
+  // Methods
+  void addJournalEntry(String textEntry) {
+    // setState so that the widget updates
+    setState(() {
+      journalEntries.add(textEntry);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,13 +77,18 @@ class _HomePageState extends State<HomePage> {
                   const SizedBox(width: 10),
                   Expanded(
                     child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(
+                      onTap: () async {
+                        final newText = await Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) => JournalTextInputPage(),
                           ),
                         );
+
+                        // If the text is not null and not empty, add it to the journal
+                        if (newText != null && newText.toString().isNotEmpty) {
+                          addJournalEntry(newText);
+                        }
                       },
                       child: Container(
                         padding:
@@ -111,6 +126,31 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
             ),
+            // Journal Entries
+            const SizedBox(height: 20),
+            Expanded(
+                child: ListView.builder(
+              itemCount: journalEntries.length,
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 5.0, horizontal: 16.0),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Icon(Icons.circle, size: 10, color: Colors.black38),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: Text(
+                          journalEntries[index],
+                          style: const TextStyle(fontSize: 16),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ))
           ],
         ),
       ),
