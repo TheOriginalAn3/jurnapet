@@ -48,6 +48,11 @@ class _MainPageState extends State<MainPage> {
       ),
       body: _pages[_currentPageIndex],
       bottomNavigationBar: BottomNavigationBar(
+        // Customization
+        //differentiate between the bottom navigation bar and the body by a shadow
+        elevation: 16,
+
+        // Items
         currentIndex: _currentPageIndex,
         onTap: _onNavBarItemTapped,
         items: [
