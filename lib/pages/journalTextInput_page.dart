@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class JournalTextInputPage extends StatefulWidget {
-  JournalTextInputPage({super.key});
+  final String? initialText;
+  JournalTextInputPage({super.key, this.initialText});
 
   @override
   State<JournalTextInputPage> createState() => _JournalTextInputPageState();
@@ -9,7 +10,13 @@ class JournalTextInputPage extends StatefulWidget {
 
 class _JournalTextInputPageState extends State<JournalTextInputPage> {
   // Constants and Variables
-  final TextEditingController textController = TextEditingController();
+  late TextEditingController textController;
+
+  @override
+  void initState() {
+    super.initState();
+    textController = TextEditingController(text: widget.initialText);
+  }
 
   void saveText() {
     final text = textController.text.trim();
@@ -39,23 +46,27 @@ class _JournalTextInputPageState extends State<JournalTextInputPage> {
                   Icon(
                     Icons.circle,
                     size: 10,
-                    color: Colors.black38,
+                    color: Colors.grey[400],
                   ),
                   const SizedBox(width: 10),
                   Expanded(
                     child: TextField(
                       controller: textController,
-                      maxLines: 1,
+                      maxLines:
+                          null, // Allows for unlimited lines to be showm when typing
+                      textAlignVertical: TextAlignVertical(y: -1.0),
+                      textCapitalization: TextCapitalization.sentences,
                       autofocus: true,
                       onSubmitted: (value) {
                         saveText();
                       },
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         hintText: 'Start typing...',
                         hintStyle: TextStyle(
-                          fontSize: 14,
+                          fontSize: 16,
                           fontStyle: FontStyle.italic,
                           fontFamily: "Times New Roman",
+                          color: Colors.grey[500],
                         ),
                         // border: OutlineInputBorder(),
                       ),
@@ -66,7 +77,6 @@ class _JournalTextInputPageState extends State<JournalTextInputPage> {
             ),
           ),
           Container(
-            color: Colors.grey.shade200,
             padding: const EdgeInsets.symmetric(vertical: 15.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -125,5 +135,11 @@ class _JournalTextInputPageState extends State<JournalTextInputPage> {
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    textController.dispose();
+    super.dispose();
   }
 }

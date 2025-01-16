@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:jurnapet/pages/journalTextInput_page.dart';
 
-class HomePage extends StatefulWidget {
-  HomePage({super.key});
+class JournalPage extends StatefulWidget {
+  JournalPage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<JournalPage> createState() => _JournalPageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _JournalPageState extends State<JournalPage> {
   // Constants
   final double paddingAmmount = 30.0;
 
