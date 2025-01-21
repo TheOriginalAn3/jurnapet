@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jurnapet/customObjects/customHabbitTrackerBox.dart';
 
 class TrackersPage extends StatefulWidget {
   TrackersPage({super.key});
@@ -10,6 +11,51 @@ class TrackersPage extends StatefulWidget {
 class _TrackersPageState extends State<TrackersPage> {
   final double trackBoxSize = 20.0;
   late int intNumBoxesTotal = 0;
+  final int intNumBoxesPerRow = 15;
+
+  List daysInMonthArray = [
+    true,
+    true,
+    true,
+    true,
+    true,
+    false,
+    true,
+    true,
+    true,
+    true,
+    false,
+    true,
+    true,
+    true,
+    true,
+    false,
+    true,
+    true,
+    true,
+    true,
+    false,
+    true,
+    true,
+    true,
+    true,
+    false,
+    true,
+    true,
+    true,
+    true,
+    false,
+    true
+  ];
+  int currentArrayIndex = -1;
+  int getCurrentArrayIndex() {
+    if (currentArrayIndex <= daysInMonthArray.length) {
+      currentArrayIndex++;
+      return currentArrayIndex;
+    } else {
+      return 0;
+    }
+  }
 
   List<Widget> _buildTrackerContainers() {
     List<Map<String, String>> trackers = [
@@ -19,14 +65,29 @@ class _TrackersPageState extends State<TrackersPage> {
 
     DateTime now = DateTime.now();
     int daysInMonth = DateTime(now.year, now.month + 1, 0).day;
+    int boxesDrawn = 0;
 
-    int calculateMaxBoxesToDisplayHorizontally() {
-      throw UnimplementedError(
-          'calculateMaxBoxesToDisplayHorizontally not implemented');
-    }
+    int calculateColumnsPerRow(int rowIndex) {
+      if (rowIndex < 0) {
+        throw Exception(
+            "Row must be greater than 0. Got $rowIndex. Please check if the index is passed and not the count.");
+      }
 
-    int calculateMaxBoxRowsToDisplay() {
-      throw UnimplementedError('calculateMaxBoxRowsToDisplay not implemented');
+      switch (rowIndex) {
+        case 0:
+          boxesDrawn += intNumBoxesPerRow;
+          return intNumBoxesPerRow;
+        case 1:
+          boxesDrawn += intNumBoxesPerRow;
+          return intNumBoxesPerRow;
+        case 2:
+          int boxesDrawnLocal = boxesDrawn;
+          boxesDrawn = 0; // reset boxesDrawn
+          return daysInMonth - boxesDrawnLocal;
+        default:
+          throw Exception(
+              "Row must be less than or equal to 2. Got $rowIndex. Please check if the index is passed and not the count.");
+      }
     }
 
     return trackers.map((tracker) {
@@ -58,7 +119,32 @@ class _TrackersPageState extends State<TrackersPage> {
               ),
             ),
             SizedBox(height: 10),
-            // TODO: Implement the tracker boxes
+            Column(
+              children: List.generate(
+                3,
+                (index) {
+                  return Row(
+                    children: List.generate(
+                      calculateColumnsPerRow(index),
+                      (index) {
+                        intNumBoxesTotal++;
+                        return Container(
+                          width: trackBoxSize,
+                          height: trackBoxSize,
+                          margin: const EdgeInsets.only(right: 3, bottom: 3),
+                          decoration: CustomHabbitTrackerBox(
+                            // color: Colors.grey.shade300,
+                            isCompleted:
+                                daysInMonthArray[getCurrentArrayIndex()],
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                        );
+                      },
+                    ),
+                  );
+                },
+              ),
+            ),
           ],
         ),
       );
