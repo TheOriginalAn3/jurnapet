@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:jurnapet/pages/journal_page.dart';
 import 'package:jurnapet/pages/profile_page.dart';
 import 'package:jurnapet/pages/settings_page.dart';
+import 'package:jurnapet/pages/trackers_page.dart';
 
 class MainPage extends StatefulWidget {
   MainPage({super.key});
@@ -15,7 +16,7 @@ class _MainPageState extends State<MainPage> {
   // Pages
   int _currentPageIndex = 0;
 
-  final List _pages = [JournalPage(), SettingsPage()];
+  final List _pages = [JournalPage(), TrackersPage(), SettingsPage()];
 
   void _onNavBarItemTapped(int index) {
     if (index > _pages.length || index < 0) {
@@ -60,6 +61,10 @@ class _MainPageState extends State<MainPage> {
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.timeline),
+            label: 'Track',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),

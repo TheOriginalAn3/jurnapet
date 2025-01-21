@@ -1,5 +1,6 @@
 // TODO: Make the date and day of the week stop scrolling when they hit the top of the screen
 // TODO: Make the bullt-list dot icon display at the beginning of the text input, not in the center of the length of the text input
+// TODO: Convert reused variables into constants at the top of the file
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -29,6 +30,35 @@ class _JournalPageState extends State<JournalPage> {
     // for (var textEntry in journalEntries) {
     //   print(textEntry);
     // }
+  }
+
+  void showDeleteConfirmation(int index) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Delete Entry"),
+          content: Text("Are you sure you want to delete this entry?"),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+              child: Text("Cancel"),
+            ),
+            TextButton(
+              onPressed: () {
+                setState(() {
+                  journalEntries.removeAt(index);
+                });
+                Navigator.of(context).pop(); // Close the dialog
+              },
+              child: Text("Delete"),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -146,9 +176,7 @@ class _JournalPageState extends State<JournalPage> {
                       ),
                       GestureDetector(
                         onLongPress: () {
-                          setState(() {
-                            journalEntries.removeAt(index);
-                          });
+                          showDeleteConfirmation(index);
                         },
                         onTap: () async {
                           final updatedText = await Navigator.push(
@@ -169,6 +197,7 @@ class _JournalPageState extends State<JournalPage> {
                         },
                         child: Text(
                           text,
+                          overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                             fontSize: 16,
                             color: Colors.black,
